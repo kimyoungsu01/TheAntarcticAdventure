@@ -1,27 +1,44 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     
-    public float forwardSpeed = 8f;     // ¾ÕÀ¸·Î ³ª¾Æ°¡´Â ¼Óµµ
-    public float jumpForce = 10f;       // Á¡ÇÁ Èû
-    public float slideDuration = 0.8f;  // ½½¶óÀÌµå Áö¼Ó ½Ã°£
+    public float forwardSpeed = 8f;     // ì•ìœ¼ë¡œ ë‚˜ì•„ê°€ëŠ” ì†ë„
+    public float jumpForce = 10f;       // ì í”„ í˜
+    public float slideDuration = 0.8f;  // ìŠ¬ë¼ì´ë“œ ì§€ì† ì‹œê°„
 
-    private Rigidbody2D rb;             // 2D °ÔÀÓÀÌ¹Ç·Î Rigidbody2D »ç¿ë
-    private CapsuleCollider2D capsuleCollider; // CapsuleCollider2D·Î º¯°æ
+    public int maxHealth = 100;         // ìµœëŒ€ ì²´ë ¥
+    private int currentHealth;          // í˜„ì¬ ì²´ë ¥
+    public int obstacleDamage = 20;     // ì¥ì• ë¬¼ ì¶©ëŒ ì‹œ ê°ì†Œ ì²´ë ¥
+    public float healthDrainRate = 1.0f; // ì´ˆë‹¹ ê°ì†Œ ì²´ë ¥
+    private float healthDrainTimer;     // ì²´ë ¥ ê°ì†Œ íƒ€ì´ë¨¸
 
-    private bool isGrounded;            // Ä³¸¯ÅÍ°¡ ¶¥¿¡ ÀÖ´ÂÁö ¿©ºÎ
-    private int jumpCount;              // ÇöÀç Á¡ÇÁ È½¼ö (2´Ü Á¡ÇÁ¸¦ À§ÇØ)
-    private const int MAX_JUMP_COUNT = 2; // ÃÖ´ë Á¡ÇÁ È½¼ö
+    private Rigidbody2D rb;             // 2D ê²Œì„ì´ë¯€ë¡œ Rigidbody2D ì‚¬ìš©
+    private CapsuleCollider2D capsuleCollider; // CapsuleCollider2Dë¡œ ë³€ê²½
 
-    private bool isSliding;             // ½½¶óÀÌµå ÁßÀÎÁö ¿©ºÎ
-    private Vector2 originalColliderSize;   // ¿ø·¡ Äİ¶óÀÌ´õ Å©±â (2D)
-    private Vector2 originalColliderOffset; // ¿ø·¡ Äİ¶óÀÌ´õ ¿ÀÇÁ¼Â (2D)
+    private bool isGrounded;            // ìºë¦­í„°ê°€ ë•…ì— ìˆëŠ”ì§€ ì—¬ë¶€
+    private int jumpCount;              // í˜„ì¬ ì í”„ íšŸìˆ˜ (2ë‹¨ ì í”„ë¥¼ ìœ„í•´)
+    private const int MAX_JUMP_COUNT = 2; // ìµœëŒ€ ì í”„ íšŸìˆ˜
+
+    private bool isSliding;             // ìŠ¬ë¼ì´ë“œ ì¤‘ì¸ì§€ ì—¬ë¶€
+    private Vector2 originalColliderSize;   // ì›ë˜ ì½œë¼ì´ë” í¬ê¸° (2D)
+    private Vector2 originalColliderOffset; // ì›ë˜ ì½œë¼ì´ë” ì˜¤í”„ì…‹ (2D)
 
   
     Animator animator;
+
+    // ì´ˆë‹¹ ì—ë„ˆì§€ -1
+    // ì²´ë ¥íšŒë³µ ì•„ì´í…œ +20
+    // ì²´ë ¥ 100
+    // ì¥ì• ë¬¼ ë§ì„ë•Œ -20
+    public GameObject player;
+
+    public int type;
+
+    float fullenergy = 100.0f;
+    float energy = 0.0f;
 
     void Start()
     {
@@ -30,9 +47,13 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>(); 
         capsuleCollider = GetComponent<CapsuleCollider2D>();
 
-        // ÃÊ±â Äİ¶óÀÌ´õ Å©±â¿Í ¿ÀÇÁ¼ÂÀ» ÀúÀå (2D Äİ¶óÀÌ´õ ¼Ó¼º)
+        // ì´ˆê¸° ì½œë¼ì´ë” í¬ê¸°ì™€ ì˜¤í”„ì…‹ì„ ì €ì¥ (2D ì½œë¼ì´ë” ì†ì„±)
         originalColliderSize = capsuleCollider.size;
         originalColliderOffset = capsuleCollider.offset;
+
+        currentHealth = maxHealth; // ê²Œì„ ì‹œì‘ ì‹œ í˜„ì¬ ì²´ë ¥ì„ ìµœëŒ€ ì²´ë ¥ìœ¼ë¡œ ì„¤ì •
+        healthDrainTimer = 1.0f;   // íƒ€ì´ë¨¸ ì´ˆê¸°í™” (1ì´ˆë§ˆë‹¤ ê°ì†Œì‹œí‚¤ê¸° ìœ„í•´)
+        Debug.Log("í˜„ì¬ ì²´ë ¥: " + currentHealth); // ì´ˆê¸° ì²´ë ¥ í™•ì¸ìš©
 
         if (animator == null)
             Debug.LogError("not Found Animator");
@@ -41,23 +62,34 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // 2´Ü Á¡ÇÁ
+        // 2ë‹¨ ì í”„
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < MAX_JUMP_COUNT)
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0); // ÇöÀç y ¼Óµµ¸¦ 0À¸·Î ÃÊ±âÈ­ (Vector2 »ç¿ë)
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // ForceMode2D.Impulse »ç¿ë
+            rb.velocity = new Vector2(rb.velocity.x, 0); // í˜„ì¬ y ì†ë„ë¥¼ 0ìœ¼ë¡œ ì´ˆê¸°í™”
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             jumpCount++;
             animator.SetBool("IsJump", true);
 
         }
 
-        // ½½¶óÀÌµå (Shift Å°)
+        // ìŠ¬ë¼ì´ë“œ (Shift í‚¤)
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isSliding)
         {
             StartSlide();
             animator.SetBool("IsSlide", true);
 
         }
+
+        // ì´ˆë§ˆë‹¤ ì²´ë ¥ ê°ì†Œ
+        healthDrainTimer -= Time.deltaTime; // ì§€ë‚œ ì‹œê°„ë§Œí¼ íƒ€ì´ë¨¸ ê°ì†Œ
+        if (healthDrainTimer <= 0)
+        {
+            currentHealth -= (int)healthDrainRate; // ì²´ë ¥ ê°ì†Œ
+            Debug.Log("ì‹œê°„ ê°ì†Œ! í˜„ì¬ ì²´ë ¥: " + currentHealth);
+            healthDrainTimer = 1.0f; // íƒ€ì´ë¨¸ ë¦¬ì…‹
+            CheckHealth(); // ì²´ë ¥ í™•ì¸
+        }
+
     }
 
     void FixedUpdate()
@@ -65,7 +97,7 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector2(forwardSpeed, rb.velocity.y);
     }
 
-    // Ä³¸¯ÅÍ°¡ ¶¥¿¡ ´ê¾Ò´ÂÁö È®ÀÎ (2D)
+    // ìºë¦­í„°ê°€ ë•…ì— ë‹¿ì•˜ëŠ”ì§€ í™•ì¸ (2D)
     void OnCollisionEnter2D(Collision2D collision) 
     {
 
@@ -74,9 +106,21 @@ public class Player : MonoBehaviour
             isGrounded = true;
             jumpCount = 0;
         }
+
+        // ì¥ì• ë¬¼ê³¼ ì¶©ëŒí–ˆì„ ë•Œ
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            currentHealth -= obstacleDamage; // ì²´ë ¥ ê°ì†Œ
+            Debug.Log("ì¥ì• ë¬¼ ì¶©ëŒ! í˜„ì¬ ì²´ë ¥: " + currentHealth);
+            CheckHealth(); // ì²´ë ¥ í™•ì¸ 
+
+            // ì¶©ëŒì• ë‹ˆ ì¶”ê°€í•´ì•¼í•¨ ë‚´ì¼í•´ì•¼ì§€
+
+        }
+
     }
 
-    // Ä³¸¯ÅÍ°¡ ¶¥¿¡¼­ ¶³¾îÁ³À» ¶§ (2D)
+    // ìºë¦­í„°ê°€ ë•…ì—ì„œ ë–¨ì–´ì¡Œì„ ë•Œ (2D)
     void OnCollisionExit2D(Collision2D collision) 
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -91,23 +135,35 @@ public class Player : MonoBehaviour
     void StartSlide()
     {
         isSliding = true;
-        // Äİ¶óÀÌ´õ Å©±â¸¦ ÁÙÀÌ°í ¿ÀÇÁ¼ÂÀ» Á¶Á¤ÇÏ¿© ½½¶óÀÌµå ÀÚ¼¼¸¦ ¸¸µê (2D Äİ¶óÀÌ´õ ¼Ó¼º)
-        capsuleCollider.size = new Vector2(originalColliderSize.x, originalColliderSize.y / 2f);
-        capsuleCollider.offset = new Vector2(originalColliderOffset.x, originalColliderOffset.y - (originalColliderSize.y / 4f));
+        // ì½œë¼ì´ë” í¬ê¸°ë¥¼ ì¤„ì´ê³  ì˜¤í”„ì…‹ì„ ì¡°ì •í•˜ì—¬ ìŠ¬ë¼ì´ë“œ ìì„¸ë¥¼ ë§Œë“¦ (2D ì½œë¼ì´ë” ì†ì„±)
+        //capsuleCollider.size = new Vector2(originalColliderSize.x, originalColliderSize.y / 2f);
+        //capsuleCollider.offset = new Vector2(originalColliderOffset.x, originalColliderOffset.y - (originalColliderSize.y / 4f));
 
-        // ÀÏÁ¤ ½Ã°£ ÈÄ ½½¶óÀÌµå¸¦ ¸ØÃß´Â ÄÚ·çÆ¾ ½ÃÀÛ
+        // ì¼ì • ì‹œê°„ í›„ ìŠ¬ë¼ì´ë“œë¥¼ ë©ˆì¶”ëŠ” ì½”ë£¨í‹´ ì‹œì‘
         Invoke("StopSlide", slideDuration);
     }
 
     void StopSlide()
     {
         isSliding = false;
-        // Äİ¶óÀÌ´õ¸¦ ¿ø·¡´ë·Î µÇµ¹¸² (2D Äİ¶óÀÌ´õ ¼Ó¼º)
-        capsuleCollider.size = originalColliderSize;
-        capsuleCollider.offset = originalColliderOffset;
+        // ì½œë¼ì´ë”ë¥¼ ì›ë˜ëŒ€ë¡œ ë˜ëŒë¦¼ (2D ì½œë¼ì´ë” ì†ì„±)
+        //capsuleCollider.size = originalColliderSize;
+        //capsuleCollider.offset = originalColliderOffset;
 
         animator.SetBool("IsSlide", false);
     }
 
+    // ì²´ë ¥ í™•ì¸ ë° ê²Œì„ ì˜¤ë²„ ì²˜ë¦¬ í•¨ìˆ˜
+    void CheckHealth()
+    {
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0; // ì²´ë ¥ì´ 0ë³´ë‹¤ ì‘ì•„ì§€ì§€ ì•Šë„ë¡
+            Debug.Log("ê²Œì„ ì˜¤ë²„! ì²´ë ¥ì´ 0ì´ ë˜ì—ˆìŠµë‹ˆë‹¤.");
+            // ì—¬ê¸°ì— ê²Œì„ ì˜¤ë²„ ì²˜ë¦¬ ë¡œì§ ì¶”ê°€ (ì˜ˆ: ê²Œì„ ë©ˆì¶”ê¸°, ë‹¤ë¥¸ ì”¬ ë¡œë“œ ë“±)
+            Time.timeScale = 0; // ê²Œì„ ì‹œê°„ì„ ë©ˆì¶¤ (ê°„ë‹¨í•œ ì˜ˆì‹œ)
+            // Destroy(gameObject); // ìºë¦­í„° ì˜¤ë¸Œì íŠ¸ ì œê±°
+        }
+    }
 
 }
