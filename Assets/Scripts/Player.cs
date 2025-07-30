@@ -20,14 +20,23 @@ public class Player : MonoBehaviour
     private Vector2 originalColliderSize;   // 원래 콜라이더 크기 (2D)
     private Vector2 originalColliderOffset; // 원래 콜라이더 오프셋 (2D)
 
+  
+    Animator animator;
+
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>(); // Rigidbody2D로 변경
-        capsuleCollider = GetComponent<CapsuleCollider2D>(); // CapsuleCollider2D로 변경
+        
+        animator = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody2D>(); 
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
 
         // 초기 콜라이더 크기와 오프셋을 저장 (2D 콜라이더 속성)
         originalColliderSize = capsuleCollider.size;
         originalColliderOffset = capsuleCollider.offset;
+
+        if (animator == null)
+            Debug.LogError("not Found Animator");
+
     }
 
     void Update()
@@ -38,38 +47,44 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0); // 현재 y 속도를 0으로 초기화 (Vector2 사용)
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // ForceMode2D.Impulse 사용
             jumpCount++;
+            animator.SetBool("IsJump", true);
+
         }
 
         // 슬라이드 (Shift 키)
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isSliding)
         {
             StartSlide();
+            animator.SetBool("IsSlide", true);
+
         }
     }
 
     void FixedUpdate()
     {
-        // 입력 없이 앞으로 이동 (2D에서는 x축이 좌우 이동, y축이 상하 이동)
         rb.velocity = new Vector2(forwardSpeed, rb.velocity.y);
     }
 
     // 캐릭터가 땅에 닿았는지 확인 (2D)
-    void OnCollisionEnter2D(Collision2D collision) // OnCollisionEnter2D로 변경
+    void OnCollisionEnter2D(Collision2D collision) 
     {
-        // "Ground" 태그를 가진 오브젝트와 충돌했을 때 (옵션: 바닥에 Ground 태그를 붙여주세요)
+
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            jumpCount = 0; // 땅에 닿으면 점프 횟수 초기화
+            jumpCount = 0;
         }
     }
 
     // 캐릭터가 땅에서 떨어졌을 때 (2D)
-    void OnCollisionExit2D(Collision2D collision) // OnCollisionExit2D로 변경
+    void OnCollisionExit2D(Collision2D collision) 
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false;
+            isGrounded = true;
+            jumpCount = 0;
+
+            animator.SetBool("IsJump", false);
         }
     }
 
@@ -90,5 +105,9 @@ public class Player : MonoBehaviour
         // 콜라이더를 원래대로 되돌림 (2D 콜라이더 속성)
         capsuleCollider.size = originalColliderSize;
         capsuleCollider.offset = originalColliderOffset;
+
+        animator.SetBool("IsSlide", false);
     }
+
+
 }
