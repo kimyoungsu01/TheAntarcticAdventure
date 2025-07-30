@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,22 +6,22 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public GameObject player;
-    public float smoothSpeed = 0.125f; // Ä«¸Ş¶ó°¡ ÇÃ·¹ÀÌ¾î¸¦ µû¶ó°¡´Â ¼Óµµ (ºÎµå·¯¿ò Á¤µµ)
-    public Vector3 offset;             // ÇÃ·¹ÀÌ¾î¿Í Ä«¸Ş¶ó »çÀÌÀÇ °Å¸® Á¶Á¤
+    public float smoothSpeed = 0.125f; // ì¹´ë©”ë¼ê°€ í”Œë ˆì´ì–´ë¥¼ ë”°ë¼ê°€ëŠ” ì†ë„ (ë¶€ë“œëŸ¬ì›€ ì •ë„)
+    public Vector3 offset;             // í”Œë ˆì´ì–´ì™€ ì¹´ë©”ë¼ ì‚¬ì´ì˜ ê±°ë¦¬ ì¡°ì •
 
-    // Ä«¸Ş¶ó YÃà À§Ä¡ °íÁ¤ (ÇÃ·¹ÀÌ¾î YÃà°ú »ó°ü¾øÀÌ ÀÏÁ¤ÇÑ ³ôÀÌ À¯Áö)
+    // ì¹´ë©”ë¼ Yì¶• ìœ„ì¹˜ ê³ ì • (í”Œë ˆì´ì–´ Yì¶•ê³¼ ìƒê´€ì—†ì´ ì¼ì •í•œ ë†’ì´ ìœ ì§€)
     // public float fixedYPosition = 2.0f; 
 
-    private void LateUpdate() // LateUpdate´Â ¸ğµç Update ÇÔ¼ö°¡ È£ÃâµÈ ÈÄ È£ÃâµÇ¾î ´õ ºÎµå·¯¿î Ä«¸Ş¶ó ¿òÁ÷ÀÓÀ» Á¦°øÇÕ´Ï´Ù.
+    private void LateUpdate() // LateUpdateëŠ” ëª¨ë“  Update í•¨ìˆ˜ê°€ í˜¸ì¶œëœ í›„ í˜¸ì¶œë˜ì–´ ë” ë¶€ë“œëŸ¬ìš´ ì¹´ë©”ë¼ ì›€ì§ì„ì„ ì œê³µí•©ë‹ˆë‹¤.
     {
-        if (player == null) return; // ÇÃ·¹ÀÌ¾î°¡ ÇÒ´çµÇÁö ¾Ê¾ÒÀ¸¸é ¾Æ¹«°Íµµ ÇÏÁö ¾ÊÀ½
+        if (player == null) return; // í”Œë ˆì´ì–´ê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ìœ¼ë©´ ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•ŠìŒ
 
-        // Ä«¸Ş¶ó°¡ µû¶ó°¥ ¸ñÇ¥ À§Ä¡ (ÇÃ·¹ÀÌ¾îÀÇ x, °íÁ¤µÈ y, °íÁ¤µÈ z)
-        // ¸¸¾à yÃàµµ µû¶ó°¡·Á¸é player.transform.position.y¸¦ »ç¿ëÇÏ¼¼¿ä.
-        // ±×¸®°í fixedYPositionÀº Á¦°ÅÇØ¾ß ÇÕ´Ï´Ù.
+        // ì¹´ë©”ë¼ê°€ ë”°ë¼ê°ˆ ëª©í‘œ ìœ„ì¹˜ (í”Œë ˆì´ì–´ì˜ x, ê³ ì •ëœ y, ê³ ì •ëœ z)
+        // ë§Œì•½ yì¶•ë„ ë”°ë¼ê°€ë ¤ë©´ player.transform.position.yë¥¼ ì‚¬ìš©í•˜ì„¸ìš”.
+        // ê·¸ë¦¬ê³  fixedYPositionì€ ì œê±°í•´ì•¼ í•©ë‹ˆë‹¤.
         Vector3 desiredPosition = new Vector3(player.transform.position.x + offset.x, transform.position.y + offset.y, transform.position.z + offset.z);
 
-        // Lerp¸¦ »ç¿ëÇÏ¿© ÇöÀç À§Ä¡¿¡¼­ ¸ñÇ¥ À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿
+        // Lerpë¥¼ ì‚¬ìš©í•˜ì—¬ í˜„ì¬ ìœ„ì¹˜ì—ì„œ ëª©í‘œ ìœ„ì¹˜ë¡œ ë¶€ë“œëŸ½ê²Œ ì´ë™
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
         transform.position = smoothedPosition;
     }
