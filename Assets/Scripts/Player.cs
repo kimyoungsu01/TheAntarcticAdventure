@@ -11,12 +11,13 @@ public class Player : MonoBehaviour
 
     public int maxHealth = 100;            // 최대 체력
     private int currentHealth;             // 현재 체력
-    public int obstacleDamage = 20;        // 장애물 충돌 시 감소 체력
+    public int obstacleDamage = 20;
+    public int potionHealAmount = 20;
     public float healthDrainRate = 1.0f;   // 초당 감소 체력
     private float healthDrainTimer;        // 체력 감소 타이머
 
     // 무적 관련 변수
-    public float invincibilityDuration = 3.0f; // 무적 시간 (초)
+    public float invincibilityDuration = 2.0f; // 무적 시간 (초)
     private bool isInvincible = false;       // 현재 무적 상태인지 여부
 
     private Rigidbody2D rb;
@@ -33,10 +34,10 @@ public class Player : MonoBehaviour
 
     Animator animator;
 
-    // 초당 에너지 -1 (주석 또는 제거)
-    // 체력회복 아이템 +20 (주석 또는 제거)
-    // 체력 100 (주석 또는 제거)
-    // 장애물 맞을때 -20 (주석 또는 제거)
+    // 초당 에너지 -1 
+    // 체력회복 아이템 +20 
+    // 체력 100
+    // 장애물 맞을때 -20 
 
     void Start()
     {
@@ -45,7 +46,7 @@ public class Player : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        // 초기 콜라이더 크기와 오프셋을 저장 (2D 콜라이더 속성)
+        // 초기 콜라이더 크기와 오프셋을 저장 
         originalColliderSize = capsuleCollider.size;
         originalColliderOffset = capsuleCollider.offset;
 
@@ -64,18 +65,25 @@ public class Player : MonoBehaviour
         // 2단 점프
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < MAX_JUMP_COUNT)
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0); // 현재 y 속도를 0으로 초기화
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            jumpCount++;
-            animator.SetBool("IsJump", true);
+            if (jumpCount < MAX_JUMP_COUNT)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0); // 현재 y 속도를 0으로 초기화
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                jumpCount++;
+                animator.SetBool("IsJump", true);
+            }
         }
 
         // 슬라이드 (Shift 키)
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isSliding)
         {
             StartSlide();
-            animator.SetBool("IsSlide", true);
         }
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && isSliding)
+        {
+            StopSlide();
+        }
+
 
         // 초마다 체력 감소
         healthDrainTimer -= Time.deltaTime;
@@ -106,26 +114,62 @@ public class Player : MonoBehaviour
             Time.timeScale = 0; // 게임 시간을 멈춤 (간단한 예시)
                                 // Destroy(gameObject); // 캐릭터 오브젝트 제거
         }
+
+
+
     }
+    // <--- 여기: HealHealth 함수 추가 시작
+    // 체력을 회복시키는 새로운 함수
+    private void HealHealth(int amount)
+    {
+        currentHealth += amount; // 체력 증가
+        // 최대 체력을 넘지 않도록 제한
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        Debug.Log("체력 회복! 현재 체력: " + currentHealth);
+
+    }
+
 
     // --- 슬라이드 관련 함수 ---
     void StartSlide()
     {
+
+        if (isSliding) return;
+
+
         isSliding = true;
+        animator.SetBool("IsSlide", true);
+
+
         // 슬라이드 콜라이더 크기/오프셋 조절 (주석 해제하여 사용 가능)
-        // capsuleCollider.size = new Vector2(originalColliderSize.x, originalColliderSize.y / 2f);
-        // capsuleCollider.offset = new Vector2(originalColliderOffset.x, originalColliderOffset.y - (originalColliderSize.y / 4f));
-        Invoke("StopSlide", slideDuration);
+        if (capsuleCollider != null)
+        {
+            capsuleCollider.size = new Vector2(originalColliderSize.x, originalColliderSize.y / 2f); // 높이를 절반으로
+            capsuleCollider.offset = new Vector2(originalColliderOffset.x, originalColliderOffset.y - (originalColliderSize.y / 4f)); // Y 오프셋을 아래로 이동
+        }
+        // Invoke("StopSlide", slideDuration);
     }
 
     void StopSlide()
     {
+        if (!isSliding) return;
+
         isSliding = false;
+        animator.SetBool("IsSlide", false);
+
         // 슬라이드 콜라이더 크기/오프셋 복원 (주석 해제하여 사용 가능)
-        // capsuleCollider.size = originalColliderSize;
-        // capsuleCollider.offset = originalColliderOffset;
+        if (capsuleCollider != null)
+        {
+            capsuleCollider.size = originalColliderSize;
+            capsuleCollider.offset = originalColliderOffset;
+        }
+
         animator.SetBool("IsSlide", false);
     }
+
 
     // --- 충돌 및 트리거 감지 ---
 
@@ -169,7 +213,19 @@ public class Player : MonoBehaviour
                 Debug.Log("장애물(트리거) 충돌! 현재 체력: " + currentHealth);
                 CheckHealth();
 
+                // 넉백 효과 추가
+                // 캐릭터의 현재 속도에 반대 방향으로 힘을 가하여 밀어냅니다.
+                // ForceMode2D.Impulse는 즉각적인 힘을 가합니다.
+                // rb.mass를 곱해주면 캐릭터의 질량에 상관없이 일정한 넉백 느낌을 낼 수 있습니다.
+                rb.AddForce(new Vector2(-wallPushBackForce * rb.mass, 0), ForceMode2D.Impulse);
+
                 StartInvincibility(); // 무적 상태 시작
+            }
+            else if (other.CompareTag("Potion"))
+            {
+                HealHealth(potionHealAmount);  // <--- 이 부분이 호출되어야 합니다.
+                Destroy(other.gameObject);
+                Debug.Log("포션 획득! 현재 체력: " + currentHealth);
             }
             // 장애물이 이제 물리적으로 막지 않으므로, 충돌 시 밀어내는 코드는 필요 없거나,
             // 시각적인 밀어내기 효과를 원한다면 AddForce를 약하게 한 번만 주는 방식 고려
