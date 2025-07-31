@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIInterface : MonoBehaviour
@@ -10,6 +11,7 @@ public class UIInterface : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         void hp(/*펭귄*/)
         {
             //if (collision.gameObject.CompareTag("장애물")) 
@@ -25,5 +27,5 @@ public class UIInterface : MonoBehaviour
             //    Debug.Log("점수가 올라간다");
             //}
         }
-    }
+
 }
