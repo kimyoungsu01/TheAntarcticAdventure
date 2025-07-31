@@ -8,6 +8,7 @@ TagManager:
   - 'Obstacle '
   - Item
   - Obstacle
+  - BackGround
   layers:
   - Default
   - TransparentFX

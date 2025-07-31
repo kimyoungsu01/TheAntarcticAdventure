@@ -1,13 +1,15 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 7f;
+    public float moveSpeed = 5f;   // âœ ì•ìœ¼ë¡œ ê°€ëŠ” ì†ë„
+
     private Rigidbody2D rb;
     private bool isGrounded = true;
     private bool isDead = false;
     private bool isSliding = false;
-    private int jumpCount = 0; //  Á¡ÇÁ È½¼ö Ä«¿îÆ®
+    private int jumpCount = 0;
 
     private BoxCollider2D col;
     private Vector2 originalColliderSize;
@@ -27,24 +29,26 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead) return;
 
-        //  2´Ü Á¡ÇÁ (Á¡ÇÁ È½¼ö < 2)
+        // í•­ìƒ ì•ìœ¼ë¡œ ì´ë™
+        rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+
+        // 2ë‹¨ ì í”„
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 2 && !isSliding)
         {
             Jump();
         }
 
-        //  ½½¶óÀÌµå (S Å°¸¦ ´©¸£°í ÀÖ´Â µ¿¾È¸¸)
+        // ìŠ¬ë¼ì´ë“œ
         if (Input.GetKey(KeyCode.S) && isGrounded)
         {
-            if (!isSliding)
-                StartSlide();
+            if (!isSliding) StartSlide();
         }
         else if (isSliding)
         {
             EndSlide();
         }
 
-        // ¶¥ ¾Æ·¡·Î ¶³¾îÁö¸é »ç¸Á
+        // ë•… ì•„ë˜ë¡œ ë–¨ì–´ì§€ë©´ ì‚¬ë§
         if (transform.position.y < -5f)
             Die();
     }
@@ -77,11 +81,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            jumpCount = 0; //  ¶¥¿¡ ´êÀ¸¸é Á¡ÇÁ Ä«¿îÆ® ÃÊ±âÈ­
+            jumpCount = 0;
         }
-
-        //if (collision.gameObject.CompareTag("Obstacle"))
-        //    Die();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -97,5 +98,6 @@ public class PlayerController : MonoBehaviour
     {
         isDead = true;
         GameManager.Instance.GameOver();
+        rb.velocity = Vector2.zero; // ì‚¬ë§ ì‹œ ë©ˆì¶¤
     }
 }
