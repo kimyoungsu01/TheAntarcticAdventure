@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 <<<<<<<< HEAD:Assets/Scripts/AnimationHandler.cs.meta
+<<<<<<< Updated upstream
 guid: cf0a4d4d21b4eeb4a92cf3d6e0604b21
+=======
+guid: e2fb822e2aed7654188d745f7ec7510e
+>>>>>>> Stashed changes
 ========
 guid: 0625a903d8434fc4d9a6699a9ca1fc92
 >>>>>>>> feature/KYS/UIManager:Assets/Scripts/UIInterface.cs.meta
