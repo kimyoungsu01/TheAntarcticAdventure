@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3056010040987600792}
   - component: {fileID: 1880754310786900711}
   - component: {fileID: -5940034477327731246}
+  - component: {fileID: -7523110996423363331}
   m_Layer: 0
   m_Name: GoldCoinS
   m_TagString: Item
@@ -106,6 +107,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-7523110996423363331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580449185007128241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bbf4d07fdfcd1441924eb7e706d8435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScoreAmt: 3
 --- !u!1 &4110248762824678063
 GameObject:
   m_ObjectHideFlags: 0

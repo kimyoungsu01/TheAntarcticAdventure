@@ -2,34 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Potion_Item : Item
+public class Gold_Item : Item
 {
+    GameManager gameManager;
+
+    private void Start()
+    {
+        gameManager = GameManager.Instance;
+    }
+    public int ScoreAmt = 0; // 골드 아이템 타입
+
 
     protected override void OnInteract()
     {
-        int score = 0; // 점수를 받아온다 임시 코드
-        int type = 0; // 골드 아이템 타입
 
+        Debug.Log("Gold_Item OnInteract 호출됨!");
+        Debug.Log("ScoreAmt 값: " + ScoreAmt);
 
-        if (type == 0)
-        {
-            score = score + 10;
-        }
+        if (gameManager == null)
+            Debug.LogError("GameManager가 null입니다!");
 
-        else if (type == 0)
-        {
-            score = score + 5;
-        }
-
-        else if (type == 0)
-        {
-            score = score + 2;
-        }
-
-        else 
-        { 
-            score = score + 1;
-        }
+        gameManager.addscore(ScoreAmt);
 
     }
 }
