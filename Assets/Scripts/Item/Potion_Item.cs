@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Gold_Item : Item
 {
-    
+    int health = 50; // 플레이어 체력을 받아온다 임시코드
+
     protected override void OnInteract()
     {
-        //체력을 증가시켜주는 코드
+        health += 20;
     }
 }

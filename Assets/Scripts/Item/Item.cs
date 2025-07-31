@@ -9,7 +9,7 @@ public abstract class Item : MonoBehaviour
     public void interact()
     {
         OnInteract();
-
+        Destroy(gameObject);
         //아이템을 먹었을 떄 사라지는 코드
 
     }

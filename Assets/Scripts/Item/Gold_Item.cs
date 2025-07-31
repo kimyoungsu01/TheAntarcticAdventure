@@ -7,6 +7,29 @@ public class Potion_Item : Item
 
     protected override void OnInteract()
     {
-        //점수 증가 코드
+        int score = 0; // 점수를 받아온다 임시 코드
+        int type = 0; // 골드 아이템 타입
+
+
+        if (type == 0)
+        {
+            score = score + 10;
+        }
+
+        else if (type == 0)
+        {
+            score = score + 5;
+        }
+
+        else if (type == 0)
+        {
+            score = score + 2;
+        }
+
+        else 
+        { 
+            score = score + 1;
+        }
+
     }
 }
