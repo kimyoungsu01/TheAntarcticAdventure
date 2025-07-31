@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2898c9c8239b7c74c8e0f72f5096ceef
+guid: 21e9ca8c58878fa4984ddb700c3fb63e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -162,13 +162,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: heart_0
+      name: gem_0
       rect:
         serializedVersion: 2
-        x: 33
-        y: 1
+        x: 1
+        y: 2
         width: 14
-        height: 13
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,8 +176,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39f19f34106d66841b7c95e59b0e9109
-      internalID: 1221833658
+      spriteID: 62f981fda05dc7948a3a2a3d42c843fb
+      internalID: -1131363544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gem_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 2
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b84f59e8280df145af739314ff2e0d6
+      internalID: -1944743276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gem_2
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 2
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff0d23ef3982f55479adc4db04bff954
+      internalID: 468515915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gem_3
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 2
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 477210e75f02e274389792effd9b3e78
+      internalID: -1117465447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gem_4
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 2
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b77d19657d99454fb7a78383ac79e7a
+      internalID: -911524574
       vertices: []
       indices: 
       edges: []
@@ -193,7 +277,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      heart_0: 1221833658
+      gem_0: -1131363544
+      gem_1: -1944743276
+      gem_2: 468515915
+      gem_3: -1117465447
+      gem_4: -911524574
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
