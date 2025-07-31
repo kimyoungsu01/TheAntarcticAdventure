@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/Item/Gold_Item.cs.meta
-guid: 6ebe3cfd77f375249bccc208c458ddcd
-========
-guid: 000fcce742bd1d44bab2b0dc7aba30d6
->>>>>>>> devlop:Assets/Scripts/GameManager.cs.meta
+guid: 596187acf56e461468677de7be6410f8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

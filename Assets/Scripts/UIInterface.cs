@@ -1,42 +1,28 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class UIInterface : MonoBehaviour
 {
-    //public TextMeshProUGUI scoreText;
-    //public TextMeshProUGUI restartsText;
+    public int Score;
+    public int hp;
 
-    // Start is called before the first frame update
-    void Start()
+    public void RefreshHpbar(/*펭귄*/)
     {
-        //if(scoreText != null)
+        // GameManager에 있는 HP를 받아와서 HPbar에 표시해주는것
+        //if (collision.gameObject.CompareTag("장애물")) 
         //{
-        //   Debug.LogError("restart text is null");
+        //    Debug.Log("장애물");
         //}
-
-        //if(restartsText != null)
-        //{
-        //    Debug.LogError("score text is null");
-        //}
-
-        //restartsText.gameObject.SetActive(false);
-
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RefreshScoreText(/*펭귄*/)
     {
-
+        // GameManager에 있는 점수를 받아와서 점수를 표시해주는것
+        //if (collision.gameObject.CompareTag("펭귄"))
+        //{
+        //    Debug.Log("점수가 올라간다");
+        //}
     }
-
-    //public void SetRestart()
-    //{ 
-    //restartsText.gameObject.SetActive(true);     
-    //}
-    //public void UpdateScore(int score)
-    //{
-    //    scoreText.text = score.ToString();
-    //}
 }
