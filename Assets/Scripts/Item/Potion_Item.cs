@@ -14,5 +14,8 @@ public class Potion_Item : Item
     protected override void OnInteract()
     {
         gameManager.Heal();
+        Destroy(gameObject);
+
+
     }
 }
