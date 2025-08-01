@@ -21,7 +21,7 @@ public class GameOverUI : MonoBehaviour
             Debug.LogError("score text is null");
         }
         
-        if (restartsText != null) // null 체크 후 비활성화
+        if (restartsText == null) // null 체크 후 비활성화
         {
             restartsText.gameObject.SetActive(false);
         }
