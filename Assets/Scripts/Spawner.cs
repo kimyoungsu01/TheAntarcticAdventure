@@ -4,14 +4,9 @@ using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
-    [Header("Obstacle Settings")]
-    public GameObject obstaclePrefab;
-    public float obstacleSpawnX = 8f;
-    public float obstacleMinHeight = -2f;
-    public float obstacleMaxHeight = 2f;
-    public float obstacleMinWidth = 0.5f;
-    public float obstacleMaxWidth = 2f;
-    public float obstacleSpawnInterval = 2f;
+
+
+
 
     [Header("Item Settings")]
     public GameObject itemPrefab;
@@ -25,28 +20,17 @@ public class Spawner : MonoBehaviour
     public float itemMinSpawnTime = 1f;  // 아이템 스폰 최소 시간 간격
     public float itemMaxSpawnTime = 2.5f; // 아이템 스폰 최대 시간 간격
 
-    private float obstacleTimer;
     private float itemSpawnTimer;
     private float lastItemGroupEndX = 0f;
-    private bool spawnObstacleOnTop = true;
 
     void Start()
     {
-        obstacleTimer = obstacleSpawnInterval;
         itemSpawnTimer = Random.Range(itemMinSpawnTime, itemMaxSpawnTime);
         SpawnItemGroup();  // 시작하자마자 아이템 그룹 한 번 스폰
     }
 
     void Update()
     {
-        // 장애물 타이머
-        obstacleTimer -= Time.deltaTime;
-        if (obstacleTimer <= 0f)
-        {
-            SpawnObstacle();
-            obstacleTimer = obstacleSpawnInterval;
-        }
-
         // 아이템 타이머
         itemSpawnTimer -= Time.deltaTime;
         if (itemSpawnTimer <= 0f)
@@ -54,19 +38,6 @@ public class Spawner : MonoBehaviour
             SpawnItemGroup();
             itemSpawnTimer = Random.Range(itemMinSpawnTime, itemMaxSpawnTime);
         }
-    }
-
-    void SpawnObstacle()
-    {
-        float yPos = spawnObstacleOnTop ? Random.Range(0f, obstacleMaxHeight) : Random.Range(obstacleMinHeight, 0f);
-        spawnObstacleOnTop = !spawnObstacleOnTop;
-
-        GameObject obs = Instantiate(obstaclePrefab, new Vector3(obstacleSpawnX, yPos, 0f), Quaternion.identity);
-        float width = Random.Range(obstacleMinWidth, obstacleMaxWidth);
-        Vector3 scale = obs.transform.localScale;
-        scale.x = width;
-        obs.transform.localScale = scale;
-        obs.tag = "Obstacle";
     }
 
     void SpawnItemGroup()
@@ -100,7 +71,8 @@ public class Spawner : MonoBehaviour
                 spawnPos = new Vector3(x, y, 0);
             }
 
-            Instantiate(itemPrefab, spawnPos, Quaternion.identity);
+            GameObject item = Instantiate(itemPrefab, spawnPos, Quaternion.identity);
+
         }
 
         // 다음 그룹 스폰 위치 갱신
