@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     private int CurrentScore =0;
     private int NowHealth = 0;
+    private float NowSpeed = 0;
+
 
     // 게임매니저에서 플레이어에 접근해서 변수를 가져오기
 
@@ -42,10 +44,10 @@ public class GameManager : MonoBehaviour
 
     public void ChangeSpeed(int SpeedAmt)
     {
-        float MaxSpeed = 2f;
-        float MinSpeed = 8f;
-        player.forwardSpeed += SpeedAmt;
-        
+        NowSpeed = player.forwardSpeed;
+        float MaxSpeed = 8f;
+        float MinSpeed = 2f;
+        player.forwardSpeed = Mathf.Clamp(player.forwardSpeed + SpeedAmt, MinSpeed, MaxSpeed);
     }
 }
 
