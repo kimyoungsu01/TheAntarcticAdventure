@@ -3413,6 +3413,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOverUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3582005594456932816, guid: 4ee4116aae2300746b557a8e3802cf62, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3613577337554306010, guid: 4ee4116aae2300746b557a8e3802cf62, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 5330773870252028345, guid: 4ee4116aae2300746b557a8e3802cf62, type: 3}
       propertyPath: m_Enabled
       value: 1
