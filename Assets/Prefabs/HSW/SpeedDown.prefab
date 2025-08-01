@@ -95,7 +95,7 @@ MonoBehaviour:
   MaxSpeed: 0
   MinSpeed: 0
   CharSpeed: 5
-  SpeedAmt: -1
+  SpeedAmt: -3
 --- !u!50 &5363464083924980311
 Rigidbody2D:
   serializedVersion: 4
