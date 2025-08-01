@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BgLooper : MonoBehaviour
 {
     public string groundTag = "Ground";
@@ -62,6 +63,8 @@ public class BgLooper : MonoBehaviour
         float setLeftEdge = GetSetLeftEdge(setToMove);
 
         Vector3 newPos = setToMove.position;
+
+        // 다음 세트의 왼쪽 끝이 현재 가장 오른쪽 끝에 딱 붙도록 위치 조정
         newPos.x += maxRightEdge - setLeftEdge;
         setToMove.position = newPos;
     }
@@ -69,6 +72,7 @@ public class BgLooper : MonoBehaviour
     float GetSetRightEdge(Transform set)
     {
         float maxRight = float.MinValue;
+
         BoxCollider2D[] colliders = set.GetComponentsInChildren<BoxCollider2D>();
 
         foreach (BoxCollider2D col in colliders)
@@ -84,6 +88,7 @@ public class BgLooper : MonoBehaviour
     float GetSetLeftEdge(Transform set)
     {
         float minLeft = float.MaxValue;
+
         BoxCollider2D[] colliders = set.GetComponentsInChildren<BoxCollider2D>();
 
         foreach (BoxCollider2D col in colliders)
