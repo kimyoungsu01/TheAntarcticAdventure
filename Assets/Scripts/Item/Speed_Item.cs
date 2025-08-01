@@ -16,12 +16,12 @@ public class Speed_Item : Item
     {
         gameManager = GameManager.Instance;
     }
-    public int SpeedAmt = 0; 
+    public int SpeedAmt = 3;
 
     //기본 속도를 5로 가정 최저속도 2 최대속도 8로 가정
+    //SpeedAmt 에 따라 속도를 증가,감소 시켜주는 코드
     protected override void OnInteract()
     {
-        //SpeedAmt 에 따라 속도를 증가,감소 시켜주는 코드
-
+        gameManager.ChangeSpeed(SpeedAmt);
     }
 }
