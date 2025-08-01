@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,10 +15,10 @@ public class GameManager : MonoBehaviour
     //싱글톤으로 만든 후에 플레이어에 접근하게 만들기,
     public Player player;
 
+
     private int CurrentScore =0;
     private int NowHealth = 0;
-    private int NowSpeed = 5;
-    public Text scoreText;
+
     // 게임매니저에서 플레이어에 접근해서 변수를 가져오기
 
     public void addscore(int scoreAmt)
@@ -28,12 +26,6 @@ public class GameManager : MonoBehaviour
         CurrentScore += scoreAmt;
         Debug.Log("현재 점수" + CurrentScore);
     }
-
-    private void UpdateScoreUI()
-    {
-        scoreText.text = "Score: " + CurrentScore.ToString();
-    }
-
     public void Heal()
     {
         NowHealth = player.currentHealth;
@@ -46,13 +38,14 @@ public class GameManager : MonoBehaviour
         {
             player.currentHealth += 20;
         }
-
-
     }
 
     public void ChangeSpeed(int SpeedAmt)
     {
-        NowSpeed += SpeedAmt;
+        float MaxSpeed = 2f;
+        float MinSpeed = 8f;
+        player.forwardSpeed += SpeedAmt;
+        
     }
 }
 
