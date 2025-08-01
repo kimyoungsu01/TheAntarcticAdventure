@@ -238,14 +238,8 @@ public class Player : MonoBehaviour
 */
         else if (other.CompareTag("Item"))
         {
-            Debug.Log("item 태그 오브젝트와 충돌!");
-            var item = other.GetComponent<Item>();
-            if (item != null)
-            {
-                Debug.Log("Item 스크립트 있음 → interact 호출!");
-                item.interact();
-            }
-
+            var item = other.GetComponent<Item>(); 
+            item.interact();
         }
         // 장애물이 이제 물리적으로 막지 않으므로, 충돌 시 밀어내는 코드는 필요 없거나,
         // 시각적인 밀어내기 효과를 원한다면 AddForce를 약하게 한 번만 주는 방식 고려
