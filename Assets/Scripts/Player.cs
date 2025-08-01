@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections; // 코루틴을 사용하려면 이 네임스페이스가 필요합니다.
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     private int jumpCount;
     private const int MAX_JUMP_COUNT = 2;
 
-    private bool isSliding;
+    private bool isSliding= false; // 슬라이드 상태 여부
     private Vector2 originalColliderSize;
     private Vector2 originalColliderOffset;
 
@@ -79,12 +79,15 @@ public class Player : MonoBehaviour
         }
 
         // 슬라이드 (Shift 키)
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isSliding)
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            Debug.Log("슬라이드 시작!");
             StartSlide();
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && isSliding)
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
+            Debug.Log("슬라이드 종료!");
             StopSlide();
         }
 
@@ -145,7 +148,7 @@ public class Player : MonoBehaviour
     // --- 슬라이드 관련 함수 ---
     void StartSlide()
     {
-
+        Debug.Log("슬라이드 시작! 현재 슬라이드 상태: ");
         if (isSliding) return;
 
 
@@ -173,10 +176,8 @@ public class Player : MonoBehaviour
         if (capsuleCollider != null)
         {
             capsuleCollider.size = originalColliderSize;
-            capsuleCollider.offset = originalColliderOffset;
         }
 
-        animator.SetBool("IsSlide", false);
     }
 
 
@@ -185,6 +186,7 @@ public class Player : MonoBehaviour
     // 바닥과의 물리적 충돌 감지 (Is Trigger가 아닌 콜라이더)
     void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("충돌 감지: " + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
