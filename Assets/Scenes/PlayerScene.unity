@@ -4416,6 +4416,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2471141267348340972, guid: 4ee4116aae2300746b557a8e3802cf62, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 248772464}
+    - target: {fileID: 2471141267348340972, guid: 4ee4116aae2300746b557a8e3802cf62, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 2471141267348340972, guid: 4ee4116aae2300746b557a8e3802cf62, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2471141267348340972, guid: 4ee4116aae2300746b557a8e3802cf62, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3582005594456932816, guid: 4ee4116aae2300746b557a8e3802cf62, type: 3}
       propertyPath: m_Name
       value: GameOverUI
