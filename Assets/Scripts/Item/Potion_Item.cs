@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gold_Item : Item
+public class Potion_Item : Item
 {
-    int health = 50; // 플레이어 체력을 받아온다 임시코드
+    GameManager gameManager;
+
+    private void Start()
+    {
+        gameManager = GameManager.Instance;
+    }
 
     protected override void OnInteract()
     {
-        health += 20;
+        gameManager.Heal();
     }
 }

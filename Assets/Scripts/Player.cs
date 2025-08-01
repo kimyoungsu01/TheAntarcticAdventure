@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public float slideDuration = 0.8f;     // 슬라이드 지속 시간
 
     public int maxHealth = 100;            // 최대 체력
-    private int currentHealth;             // 현재 체력
+    public int currentHealth;             // 현재 체력-- 황상욱, 전역변수로 전환
     public int obstacleDamage = 20;
     public int potionHealAmount = 20;
     public float healthDrainRate = 1.0f;   // 초당 감소 체력
@@ -33,7 +33,8 @@ public class Player : MonoBehaviour
     private Vector2 originalColliderOffset;
 
     Animator animator;
-
+    //-황상욱
+    GameManager gameManager;
     // 초당 에너지 -1 
     // 체력회복 아이템 +20 
     // 체력 100
@@ -41,6 +42,9 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        //-황상욱-게임메니저 인스턴스 추가
+        gameManager = GameManager.Instance;
+
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
@@ -221,16 +225,28 @@ public class Player : MonoBehaviour
 
                 StartInvincibility(); // 무적 상태 시작
             }
-            else if (other.CompareTag("Potion"))
-            {
-                HealHealth(potionHealAmount);  // <--- 이 부분이 호출되어야 합니다.
-                Destroy(other.gameObject);
-                Debug.Log("포션 획득! 현재 체력: " + currentHealth);
-            }
-            // 장애물이 이제 물리적으로 막지 않으므로, 충돌 시 밀어내는 코드는 필요 없거나,
-            // 시각적인 밀어내기 효과를 원한다면 AddForce를 약하게 한 번만 주는 방식 고려
-            // 예: rb.AddForce(new Vector2(-wallPushBackForce, 0), ForceMode2D.Impulse);
+
         }
+        /* 
+    else if (other.CompareTag("Potion"))
+
+{
+    HealHealth(potionHealAmount);  // <--- 이 부분이 호출되어야 합니다.
+    Destroy(other.gameObject);
+    Debug.Log("포션 획득! 현재 체력: " + currentHealth);
+}
+*/
+        else if (other.CompareTag("Item"))
+        {
+            var item = other.GetComponent<Item>(); 
+            item.interact();
+        }
+        // 장애물이 이제 물리적으로 막지 않으므로, 충돌 시 밀어내는 코드는 필요 없거나,
+        // 시각적인 밀어내기 효과를 원한다면 AddForce를 약하게 한 번만 주는 방식 고려
+        // 예: rb.AddForce(new Vector2(-wallPushBackForce, 0), ForceMode2D.Impulse);
+
+        //- 황상욱 태그를 아이템으로 바꾸고 getcomponent로 item 클래스를 받아오고 interact()호출
+
     }
 
     // --- 무적 관련 함수 ---
