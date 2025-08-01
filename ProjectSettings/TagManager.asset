@@ -5,10 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - 'Obstacle '
-  - Item
   - Obstacle
-  - BackGround
+  - Item
+  - Potion
   layers:
   - Default
   - TransparentFX
