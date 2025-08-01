@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private int NowHealth = 0;
     public TMP_Text ScoreText;
 
+
     // 게임매니저에서 플레이어에 접근해서 변수를 가져오기
 
     public GameOverUI gameOverUIInstance; // 게임 오버 UI 스크립트 참조
@@ -61,10 +62,12 @@ public class GameManager : MonoBehaviour
 
     public void ChangeSpeed(int SpeedAmt)
     {
-        float MaxSpeed = 2f;
-        float MinSpeed = 8f;
-        player.forwardSpeed += SpeedAmt;
-        
+        float MaxSpeed = 8f;
+        float MinSpeed = 2f;
+        player.forwardSpeed = Mathf.Clamp(player.forwardSpeed + SpeedAmt, MinSpeed, MaxSpeed);
+        Debug.Log("속도" + player.forwardSpeed);
+
+
     }
     public void EndGame()//게임 오버를 처리하는 메서드입니다.
     {
