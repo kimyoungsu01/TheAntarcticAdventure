@@ -6,23 +6,11 @@ public class BgLooper : MonoBehaviour
 {
     public string groundTag = "Ground";
     public string backgroundTag = "BackGround";
-
-    public int obstacleCount = 0;
-    public Vector3 obstacleLastPosition = Vector3.zero;
+    public string obstacleTag = "Obstacle";  // 장애물 세트 부모 태그
 
     void Start()
     {
-        Obstacle[] obstacles = GameObject.FindObjectsOfType<Obstacle>();
-        if (obstacles.Length > 0)
-        {
-            obstacleLastPosition = obstacles[0].transform.position;
-            obstacleCount = obstacles.Length;
-
-            for (int i = 0; i < obstacleCount; i++)
-            {
-                obstacleLastPosition = obstacles[i].SetRandomPlace(obstacleLastPosition, obstacleCount);
-            }
-        }
+        // 시작 시 별도의 처리는 필요 없음
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,26 +18,23 @@ public class BgLooper : MonoBehaviour
         Transform parentSet = collision.transform.parent;
         if (parentSet == null) return;
 
-        if (parentSet.CompareTag(groundTag) || parentSet.CompareTag(backgroundTag))
-        {
-            string tag = parentSet.tag;
-            MoveSetNextToRightmost(parentSet, tag);
-            return;
-        }
+        string parentTag = parentSet.tag;
 
-        Obstacle obstacle = collision.GetComponent<Obstacle>();
-        if (obstacle)
+        // Ground, Background, Obstacle 모두 동일하게 루프 처리
+        if (parentTag == groundTag || parentTag == backgroundTag || parentTag == obstacleTag)
         {
-            obstacleLastPosition = obstacle.SetRandomPlace(obstacleLastPosition, obstacleCount);
+            MoveSetNextToRightmost(parentSet, parentTag);
         }
     }
 
+    // 세트를 같은 태그 내에서 가장 오른쪽 세트 옆으로 이동시키는 함수
     void MoveSetNextToRightmost(Transform setToMove, string tag)
     {
         GameObject[] sets = GameObject.FindGameObjectsWithTag(tag);
 
         float maxRightEdge = float.MinValue;
 
+        // 현재 세트를 제외하고 오른쪽 끝 위치를 찾음
         foreach (GameObject set in sets)
         {
             if (set == setToMove.gameObject) continue;
@@ -61,11 +46,14 @@ public class BgLooper : MonoBehaviour
 
         float setLeftEdge = GetSetLeftEdge(setToMove);
 
+        // 새 위치 계산 → 기존과 동일하게 "딱 붙임"
         Vector3 newPos = setToMove.position;
         newPos.x += maxRightEdge - setLeftEdge;
+
         setToMove.position = newPos;
     }
 
+    // 세트의 오른쪽 가장자리 X 좌표 반환
     float GetSetRightEdge(Transform set)
     {
         float maxRight = float.MinValue;
@@ -81,6 +69,7 @@ public class BgLooper : MonoBehaviour
         return maxRight;
     }
 
+    // 세트의 왼쪽 가장자리 X 좌표 반환
     float GetSetLeftEdge(Transform set)
     {
         float minLeft = float.MaxValue;
