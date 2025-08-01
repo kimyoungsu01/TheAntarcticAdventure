@@ -6113,7 +6113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 441590180}
-  scoreText: {fileID: 1340325859}
+  ScoreText: {fileID: 1340325859}
 --- !u!4 &1936098400
 Transform:
   m_ObjectHideFlags: 0

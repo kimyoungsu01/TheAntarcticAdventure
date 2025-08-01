@@ -61,6 +61,6 @@ public class UIInterface : MonoBehaviour
     public void RefreshScoreText()
     {
         // GameManager에 있는 점수를 받아와서 점수를 표시해준다
-        scoreText.text = "Score: " + gameManager.Score.ToString();
+        scoreText.text = gameManager.Score.ToString();
     }
 }

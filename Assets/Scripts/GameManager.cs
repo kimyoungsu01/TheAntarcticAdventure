@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private int CurrentScore =0;
     private int NowHealth = 0;
-    public TMP_Text scoreText;
+    public TMP_Text ScoreText;
 
     // 게임매니저에서 플레이어에 접근해서 변수를 가져오기
 
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdateScoreUI()
     {
-        scoreText.text = "Score: " + CurrentScore.ToString();
+        ScoreText.text = CurrentScore.ToString();
     }
 
     public void Heal()
