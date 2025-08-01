@@ -23,5 +23,7 @@ public class Speed_Item : Item
     protected override void OnInteract()
     {
         gameManager.ChangeSpeed(SpeedAmt);
+        Destroy(gameObject);
+
     }
 }
