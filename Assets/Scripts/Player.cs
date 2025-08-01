@@ -117,6 +117,11 @@ public class Player : MonoBehaviour
             Debug.Log("게임 오버! 체력이 0이 되었습니다.");
             Time.timeScale = 0; // 게임 시간을 멈춤 (간단한 예시)
                                 // Destroy(gameObject); // 캐릭터 오브젝트 제거
+                                // 게임 오버 처리 시작
+            if (GameManager.Instance != null) // GameManager 인스턴스가 존재하는지 확인
+            {
+                GameManager.Instance.EndGame(); // GameManager의 EndGame 메서드 호출 (게임 오버 처리 시작)
+            }
         }
 
 
