@@ -1,59 +1,51 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    
+    static GameManager gameManager;
+    public static GameManager Instance { get { return gameManager; } }
 
-    [Header("UI ����")]
-    public UnityEngine.UI.Text scoreText;   //  UI Text ������ ���
-    public GameObject gameOverPanel;
-
-    private int score = 0;
-    private bool isGameOver = false;
-
-    void Awake()
+    private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        gameManager = this;
+    }
+    //싱글톤으로 만든 후에 플레이어에 접근하게 만들기,
+    public Player player;
+
+
+    private int CurrentScore =0;
+    private int NowHealth = 0;
+
+    // 게임매니저에서 플레이어에 접근해서 변수를 가져오기
+
+    public void addscore(int scoreAmt)
+    {
+        CurrentScore += scoreAmt;
+        Debug.Log("현재 점수" + CurrentScore);
+    }
+    public void Heal()
+    {
+        NowHealth = player.currentHealth;
+        NowHealth += 20;
+        if (NowHealth > player.maxHealth)
+        {
+            player.currentHealth = player.maxHealth;
+        }
+        else
+        {
+            player.currentHealth += 20;
+        }
     }
 
-    void Start()
+    public void ChangeSpeed(int SpeedAmt)
     {
-        UpdateScore();
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(false);
-    }
-
-    public void AddScore(int amount)
-    {
-        if (isGameOver) return;
-        score += amount;
-        UpdateScore();
-    }
-
-    private void UpdateScore()
-    {
-        if (scoreText != null)
-            scoreText.text = "Score: " + score;
-    }
-
-    public void GameOver()
-    {
-        if (isGameOver) return;
-
-        isGameOver = true;
-        UnityEngine.Debug.Log("���� ����!");
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(true);
-
-        Time.timeScale = 0f;
-    }
-
-    public void RestartGame()
-    {
-        Time.timeScale = 1f;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
-        );
+        float MaxSpeed = 2f;
+        float MinSpeed = 8f;
+        player.forwardSpeed += SpeedAmt;
+        
     }
 }
+
