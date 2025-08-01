@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     
     static GameManager gameManager;
+    
     public static GameManager Instance { get { return gameManager; } }
 
     private void Awake()
@@ -17,9 +19,12 @@ public class GameManager : MonoBehaviour
     //싱글톤으로 만든 후에 플레이어에 접근하게 만들기,
     public Player player;
 
+    public int HP => player.currentHealth;
+    public int Score => CurrentScore;
+
     private int CurrentScore =0;
     private int NowHealth = 0;
-    public Text scoreText;
+    public TMP_Text scoreText;
 
     // 게임매니저에서 플레이어에 접근해서 변수를 가져오기
 
@@ -27,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         CurrentScore += scoreAmt;
         Debug.Log("현재 점수" + CurrentScore);
+        UpdateScoreUI();
     }
 
     private void UpdateScoreUI()
