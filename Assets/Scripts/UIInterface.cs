@@ -12,46 +12,55 @@ public class UIInterface : MonoBehaviour
     public Image hpBar; // 체력바 UI 연결 (선택)
 
     private GameManager gameManager;
+    private float originalWidth; // 체력 100일 때의 체력바 너비
+    private float currentWidth; // 현재 체력바 너비
     private float smoothSpeed = 5f; // 체력바가 부드럽게 이동하도록 설정
 
     private void Start()
     {
         gameManager = GameManager.Instance;
 
-        if (gameManager == null) 
+        if (gameManager == null)
         {
-            Debug.Log("게임매니저 연결됨. 현재 체력: " + gameManager.HP);
+            Debug.LogError("GameManager 연결 실패!");
             return;
         }
+
+        originalWidth = hpBar.rectTransform.sizeDelta.x;
+        currentWidth = originalWidth;
 
         RefreshScoreText(); // 초기 점수 표시
         RefreshHpBar();     // 초기 체력 표시
     }
+    private void Update()
+    {
+        UpdateHpBarSmoothly(); // 프레임마다 체력바 업데이트
+    }
+
+    private void UpdateHpBarSmoothly() //체력바 부드럽게 해준다
+    {
+        float targetWidth = Mathf.Clamp01(gameManager.HP / 100f) * originalWidth;
+        currentWidth = Mathf.Lerp(currentWidth, targetWidth, Time.deltaTime * smoothSpeed);
+
+        Vector2 size = hpBar.rectTransform.sizeDelta;
+        size.x = currentWidth;
+        hpBar.rectTransform.sizeDelta = size;
+    }
 
     public void RefreshHpBar()
     {
-        // GameManager에 있는 HP를 받아와서 HPbar에 표시해주는것
-        float targetFill = gameManager.HP / 100f;
-        StopAllCoroutines();
-        StartCoroutine(SmoothFillBar(targetFill));
-    }
+        // GameManager에 있는 HP를 받아와서 HPbar에 표시해준다
+        float hpPercent = Mathf.Clamp01(gameManager.HP / 100f);
+        float targetWidth = hpPercent * originalWidth;
 
-    private IEnumerator SmoothFillBar(float target)
-    {
-        float current = hpBar.fillAmount;
-        float t = 0f;
-        while (t < 1f)
-        {
-            t += Time.deltaTime * smoothSpeed;
-            hpBar.fillAmount = Mathf.Lerp(current, target, t);
-            yield return null;
-        }
-        hpBar.fillAmount = target;
+        Vector2 size = hpBar.rectTransform.sizeDelta;
+        size.x = targetWidth;
+        hpBar.rectTransform.sizeDelta = size;
     }
 
     public void RefreshScoreText()
     {
-        // GameManager에 있는 점수를 받아와서 점수를 표시해주는것
+        // GameManager에 있는 점수를 받아와서 점수를 표시해준다
         scoreText.text = "Score: " + gameManager.Score.ToString();
     }
 }
