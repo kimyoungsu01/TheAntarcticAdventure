@@ -225,35 +225,34 @@ public class Player : MonoBehaviour
 
                 StartInvincibility(); // 무적 상태 시작
             }
-        /* 
-            else if (other.CompareTag("Potion"))
-           
-        {
-            HealHealth(potionHealAmount);  // <--- 이 부분이 호출되어야 합니다.
-            Destroy(other.gameObject);
-            Debug.Log("포션 획득! 현재 체력: " + currentHealth);
-        }
-        */
-            else if (other.CompareTag("Item"))
-            {
-                Debug.Log("item 태그 오브젝트와 충돌!");
-                var item = other.GetComponent<Item>();
-                if (item != null)
-                {
-                    Debug.Log("Item 스크립트 있음 → interact 호출!");
-                    item.interact();
-                }
-                else
-                {
-                    Debug.LogWarning("Item 컴포넌트 없음");
-                }
-            }
-            // 장애물이 이제 물리적으로 막지 않으므로, 충돌 시 밀어내는 코드는 필요 없거나,
-            // 시각적인 밀어내기 효과를 원한다면 AddForce를 약하게 한 번만 주는 방식 고려
-            // 예: rb.AddForce(new Vector2(-wallPushBackForce, 0), ForceMode2D.Impulse);
 
-            //- 황상욱 태그를 아이템으로 바꾸고 getcomponent로 item 클래스를 받아오고 interact()호출
         }
+        /* 
+    else if (other.CompareTag("Potion"))
+
+{
+    HealHealth(potionHealAmount);  // <--- 이 부분이 호출되어야 합니다.
+    Destroy(other.gameObject);
+    Debug.Log("포션 획득! 현재 체력: " + currentHealth);
+}
+*/
+        else if (other.CompareTag("Item"))
+        {
+            Debug.Log("item 태그 오브젝트와 충돌!");
+            var item = other.GetComponent<Item>();
+            if (item != null)
+            {
+                Debug.Log("Item 스크립트 있음 → interact 호출!");
+                item.interact();
+            }
+
+        }
+        // 장애물이 이제 물리적으로 막지 않으므로, 충돌 시 밀어내는 코드는 필요 없거나,
+        // 시각적인 밀어내기 효과를 원한다면 AddForce를 약하게 한 번만 주는 방식 고려
+        // 예: rb.AddForce(new Vector2(-wallPushBackForce, 0), ForceMode2D.Impulse);
+
+        //- 황상욱 태그를 아이템으로 바꾸고 getcomponent로 item 클래스를 받아오고 interact()호출
+
     }
 
     // --- 무적 관련 함수 ---
