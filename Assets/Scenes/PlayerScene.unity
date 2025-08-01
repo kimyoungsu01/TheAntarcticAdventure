@@ -546,6 +546,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &248772463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 248772465}
+  - component: {fileID: 248772464}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &248772464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248772463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b58bea6f4288240b8b39ad19d56894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 441590180}
+--- !u!4 &248772465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248772463}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.26, y: -2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330045441
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +865,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2412758021658248947, guid: 103d0e42591e75b4999b52e1b666592a, type: 3}
       propertyPath: m_TagString
-      value: Potion
+      value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 3272772633342324365, guid: 103d0e42591e75b4999b52e1b666592a, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6108980847500657504, guid: 103d0e42591e75b4999b52e1b666592a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1079,6 +1128,7 @@ MonoBehaviour:
   jumpForce: 7
   slideDuration: 0.8
   maxHealth: 100
+  currentHealth: 0
   obstacleDamage: 20
   potionHealAmount: 20
   healthDrainRate: 1
@@ -4890,7 +4940,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103413129}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -4986,7 +5036,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 1966144681}
   - {fileID: 695198830}
-  - {fileID: 25944540}
   - {fileID: 441590183}
+  - {fileID: 25944540}
   - {fileID: 518260171}
   - {fileID: 355944548}
+  - {fileID: 248772465}

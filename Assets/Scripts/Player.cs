@@ -238,6 +238,7 @@ public class Player : MonoBehaviour
 */
         else if (other.CompareTag("Item"))
         {
+            Debug.Log("아이템 획득!"); // 아이템 획득 로그
             var item = other.GetComponent<Item>(); 
             item.interact();
         }
