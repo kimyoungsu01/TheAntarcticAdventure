@@ -9,6 +9,7 @@ TagManager:
   - BackGround
   - Obstacle
   - BGGround
+  - ItemSpawn
   layers:
   - Default
   - TransparentFX

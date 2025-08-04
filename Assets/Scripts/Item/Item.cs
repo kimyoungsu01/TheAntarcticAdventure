@@ -10,7 +10,9 @@ public abstract class Item : MonoBehaviour
     {
         Debug.Log("아이템을 획득했습니다.");
         OnInteract();
-        
+
+        // ✅ 파괴 대신 비활성화
+        gameObject.SetActive(false);
 
     }
 }

@@ -22,7 +22,6 @@ public class Gold_Item : Item
         if (gameManager == null)
             Debug.LogError("GameManager가 null입니다!");
 
-        Destroy(gameObject);
         gameManager.addscore(ScoreAmt);
 
     }
