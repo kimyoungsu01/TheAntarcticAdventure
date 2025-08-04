@@ -58,4 +58,6 @@ public class GameOverUI : MonoBehaviour
         // 이 스크립트가 붙어있는 게임 오브젝트(UI 패널) 자체를 비활성화합니다.
         this.gameObject.SetActive(false);
     }
+
+    
 }
