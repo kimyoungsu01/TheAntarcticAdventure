@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private AudioClip PlayerJumpSound;
     [SerializeField] private AudioClip PlayerHitSound;
+    [SerializeField] private AudioClip PlayerSlideSound;
 
     public float wallPushBackForce = 2.0f; // 벽에 부딪혔을 때 뒤로 밀어내는 힘
 
@@ -95,6 +96,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("슬라이드 시작!");
             StartSlide();
+            GameManager.Instance.SE.PlayOneShot(PlayerSlideSound);
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
