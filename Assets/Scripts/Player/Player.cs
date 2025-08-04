@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     public float wallPushBackForce = 2.0f; // 벽에 부딪혔을 때 뒤로 밀어내는 힘
 
     public float forwardSpeed = 5f;        // 앞으로 나아가는 속도
-    public float jumpForce = 10f;          // 점프 힘
+    public float jumpForce = 100f;          // 점프 힘
     public float slideDuration = 0.8f;     // 슬라이드 지속 시간
 
     public int maxHealth = 100;            // 최대 체력
