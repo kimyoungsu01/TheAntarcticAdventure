@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
-using TMPro;
 
 public class UIInterface : MonoBehaviour
 {
