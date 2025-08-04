@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public float HP => player.currentHealth;
     public float Score => CurrentScore;
-
+    public AudioSource Bgm;
 
     private float CurrentScore =0;
     private float NowHealth = 0;
@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()//게임 오버를 처리하는 메서드입니다.
     {
         Debug.Log("GameManager: 게임 종료! 최종 점수: " + GetCurrentScore());
+        Bgm.Stop();
 
         //게임 오버 화면을 활성화하고 점수를 전달합니다.
         if (gameOverUIInstance != null)

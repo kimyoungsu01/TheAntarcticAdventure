@@ -8,7 +8,7 @@ public class Speed_Item : Item
     public float MaxSpeed = 2f;
     public float MinSpeed = 8f;
     public float CharSpeed = 5f;
-
+    public AudioSource SpeedSound;
 
     GameManager gameManager;
 
@@ -22,7 +22,8 @@ public class Speed_Item : Item
     //SpeedAmt 에 따라 속도를 증가,감소 시켜주는 코드
     protected override void OnInteract()
     {
+        
         gameManager.ChangeSpeed(SpeedAmt);
-
+        SpeedSound.Play();
     }
 }
