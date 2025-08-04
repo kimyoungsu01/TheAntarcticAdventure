@@ -40,7 +40,7 @@ public class GameOverUI : MonoBehaviour
     {
         if (gameoverscoreText != null) // null 체크 후 점수 업데이트
         {
-            gameoverscoreText.text = score.ToString();
+            gameoverscoreText.text = "End Score : " + score.ToString();
         }
     }
     public void ShowGameOverScreen(float finalScore)
