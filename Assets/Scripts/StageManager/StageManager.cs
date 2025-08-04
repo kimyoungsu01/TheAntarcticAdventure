@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,12 +10,12 @@ public class StageManager : MonoBehaviour
 
     public Difficulty currentDifficulty = Difficulty.Normal;
 
-    [Header("³­ÀÌµµº° ½ÃÀÛ ¼Óµµ")]
+    [Header("ë‚œì´ë„ë³„ ì‹œì‘ ì†ë„")]
     public float easyStartSpeed = 4f;
     public float normalStartSpeed = 6f;
     public float hardStartSpeed = 8f;
 
-    [Header("°¡¼Óµµ (ÃÊ´ç Áõ°¡ ¼Óµµ)")]
+    [Header("ê°€ì†ë„ (ì´ˆë‹¹ ì¦ê°€ ì†ë„)")]
     public float acceleration = 0.05f;
 
     private Player player;
@@ -33,7 +33,7 @@ public class StageManager : MonoBehaviour
 
         if (player == null)
         {
-            Debug.LogError("Player¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
+            Debug.LogError("Playerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
             return;
         }
 
@@ -68,13 +68,13 @@ public class StageManager : MonoBehaviour
         if (player != null)
             player.forwardSpeed = currentSpeed;
 
-        Debug.Log($"[StageManager] ³­ÀÌµµ º¯°æ: {currentDifficulty}, ½ÃÀÛ ¼Óµµ: {currentSpeed}");
+        Debug.Log($"[StageManager] ë‚œì´ë„ ë³€ê²½: {currentDifficulty}, ì‹œì‘ ì†ë„: {currentSpeed}");
     }
 
 #if UNITY_EDITOR
     void OnValidate()
     {
-        // ¿¡µğÅÍ¿¡¼­ currentDifficulty ¹Ù²Ü ¶§ Áï½Ã ¹İ¿µÇÏ·Á¸é
+        // ì—ë””í„°ì—ì„œ currentDifficulty ë°”ê¿€ ë•Œ ì¦‰ì‹œ ë°˜ì˜í•˜ë ¤ë©´
         if (!Application.isPlaying)
         {
             switch (currentDifficulty)
