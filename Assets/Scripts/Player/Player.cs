@@ -97,7 +97,6 @@ public class Player : MonoBehaviour
             Debug.Log("슬라이드 시작!");
             StartSlide();
             GameManager.Instance.SE.PlayOneShot(PlayerSlideSound);
-
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
