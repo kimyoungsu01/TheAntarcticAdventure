@@ -14,7 +14,7 @@ public class UIInterface : MonoBehaviour
     private float originalWidth; // 체력 100일 때의 체력바 너비
     private float currentWidth; // 현재 체력바 너비
     private float smoothSpeed = 5f; // 체력바가 부드럽게 이동하도록 설정
-
+    
     private void Start()
     {
         gameManager = GameManager.Instance;
@@ -40,7 +40,7 @@ public class UIInterface : MonoBehaviour
     {
         float targetWidth = Mathf.Clamp01(gameManager.HP / 100f) * originalWidth;
         currentWidth = Mathf.Lerp(currentWidth, targetWidth, Time.deltaTime * smoothSpeed);
-
+        
         Vector2 size = hpBar.rectTransform.sizeDelta;
         size.x = currentWidth;
         hpBar.rectTransform.sizeDelta = size;

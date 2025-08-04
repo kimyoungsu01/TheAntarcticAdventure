@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI; // UI 관련 클래스 사용
 
 public class Player : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour
     public int potionHealAmount = 20;
     public float healthDrainRate = 1.0f;   // 초당 감소 체력
     private float healthDrainTimer;        // 체력 감소 타이머
-
+    
     // 무적 관련 변수
     public float invincibilityDuration = 2.0f; // 무적 시간 (초)
     private bool isInvincible = false;       // 현재 무적 상태인지 여부
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour
     private bool isSliding= false; // 슬라이드 상태 여부
     private Vector2 originalColliderSize;
     private Vector2 originalColliderOffset;
-
+    public Image hpBarImage;
     Animator animator;
     //-황상욱
     GameManager gameManager;
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
     // 체력회복 아이템 +20 
     // 체력 100
     // 장애물 맞을때 -20 
+
+
 
     void Start()
     {
@@ -62,6 +65,10 @@ public class Player : MonoBehaviour
             Debug.LogError("Animator 컴포넌트를 찾을 수 없습니다! (GetComponentInChildren 확인)");
         if (spriteRenderer == null)
             Debug.LogWarning("SpriteRenderer 컴포넌트를 찾을 수 없습니다. 무적 시 깜빡임 효과를 적용할 수 없습니다.");
+        if (hpBarImage == null)
+        {
+            Debug.LogWarning("Player 스크립트: hpBarImage가 연결되지 않았습니다. HP바를 수동으로 조절할 수 없습니다. Unity Inspector에서 연결해주세요.");
+        }
     }
 
     void Update()
@@ -118,20 +125,49 @@ public class Player : MonoBehaviour
         {
             currentHealth = 0; // 체력이 0보다 작아지지 않도록
             Debug.Log("게임 오버! 체력이 0이 되었습니다.");
-            Time.timeScale = 0; // 게임 시간을 멈춤 (간단한 예시)
-                                // Destroy(gameObject); // 캐릭터 오브젝트 제거
-                                // 게임 오버 처리 시작
-            if (GameManager.Instance != null) // GameManager 인스턴스가 존재하는지 확인
+            
+
+            // 1. HP 바 수동 조정
+            if (hpBarImage != null)
             {
-                GameManager.Instance.EndGame(); // GameManager의 EndGame 메서드 호출 (게임 오버 처리 시작)
+                hpBarImage.fillAmount = 0f;
+                Debug.Log("HP 바를 0으로 설정했습니다.");
             }
+            else
+            {
+                Debug.LogWarning("Player 스크립트: hpBarImage가 연결되지 않아 HP 바를 수동으로 조절할 수 없습니다.");
+            }
+
+            // 2. 무적 상태 정리
+            if (isInvincible) // 현재 플레이어가 무적 상태였다면
+            {
+                EndInvincibility();
+            }
+
+            // 3. 죽음 애니메이션 재생
+            if (animator != null)
+            {
+                animator.SetBool("IsDie", true);
+            }
+            else
+            {
+                Debug.LogWarning("Player 스크립트: Animator 컴포넌트가 없어 'IsDie' 애니메이션을 설정할 수 없습니다!");
+            }
+
+            
+            // 이 호출이 있어야 GameManager가 GameOverUI를 화면에 띄웁니다.
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.EndGame();
+            }
+            else
+            {
+                Debug.LogError("GameManager 인스턴스를 찾을 수 없습니다. 게임 오버 UI가 표시되지 않을 수 있습니다.");
+            }
+            Time.timeScale = 0; // 게임 시간을 멈춤
         }
-
-
-
     }
-    // <--- 여기: HealHealth 함수 추가 시작
-    // 체력을 회복시키는 새로운 함수
+    
     private void HealHealth(int amount)
     {
         currentHealth += amount; // 체력 증가
@@ -216,13 +252,17 @@ public class Player : MonoBehaviour
     // 장애물과의 트리거 충돌 감지 (Is Trigger가 체크된 콜라이더)
     void OnTriggerEnter2D(Collider2D other) // Collision2D 대신 Collider2D를 매개변수로 사용
     {
+        if(currentHealth <= 0)
+        {             Debug.Log("플레이어가 이미 죽었으므로 충돌 처리 무시");
+            return; // 플레이어가 죽은 상태라면 충돌 처리 무시
+        }
         if (other.CompareTag("Obstacle")) // "Obstacle" 태그를 가진 오브젝트와 트리거 충돌
         {
             if (!isInvincible) // 무적 상태가 아닐 때만 데미지 적용
             {
                 currentHealth -= obstacleDamage; // 체력 감소
                 Debug.Log("장애물(트리거) 충돌! 현재 체력: " + currentHealth);
-                CheckHealth();
+                
 
                 // 넉백 효과 추가
                 // 캐릭터의 현재 속도에 반대 방향으로 힘을 가하여 밀어냅니다.
@@ -231,6 +271,7 @@ public class Player : MonoBehaviour
                 rb.AddForce(new Vector2(-wallPushBackForce * rb.mass, 0), ForceMode2D.Impulse);
 
                 StartInvincibility(); // 무적 상태 시작
+                CheckHealth();
             }
 
         }
@@ -275,7 +316,7 @@ public class Player : MonoBehaviour
 
     void EndInvincibility()
     {
-        isInvincible = false;
+        isInvincible = false; 
         Debug.Log("무적 상태 종료!");
 
         if (spriteRenderer != null)
@@ -301,4 +342,6 @@ public class Player : MonoBehaviour
         spriteRenderer.enabled = true; // 무적 시간이 끝나면 다시 보이게 함
         spriteRenderer.color = Color.white; // 원래 색상으로 복구
     }
+
+    
 }
