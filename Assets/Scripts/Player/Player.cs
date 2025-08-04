@@ -4,6 +4,9 @@ using UnityEngine.UI; // UI 관련 클래스 사용
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private AudioClip PlayerJumpSound;
+    [SerializeField] private AudioClip PlayerHitSound;
+
     public float wallPushBackForce = 2.0f; // 벽에 부딪혔을 때 뒤로 밀어내는 힘
 
     public float forwardSpeed = 5f;        // 앞으로 나아가는 속도
@@ -82,6 +85,8 @@ public class Player : MonoBehaviour
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 jumpCount++;
                 animator.SetBool("IsJump", true);
+                GameManager.Instance.SE.PlayOneShot(PlayerJumpSound);
+
             }
         }
 
@@ -265,7 +270,8 @@ public class Player : MonoBehaviour
             {
                 currentHealth -= obstacleDamage; // 체력 감소
                 Debug.Log("장애물(트리거) 충돌! 현재 체력: " + currentHealth);
-                
+                GameManager.Instance.SE.PlayOneShot(PlayerHitSound);
+
 
                 // 넉백 효과 추가
                 // 캐릭터의 현재 속도에 반대 방향으로 힘을 가하여 밀어냅니다.

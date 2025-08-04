@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
         {
             gameOverUIInstance.HideGameOverScreen();
         }
-
+        //이 위치에 재시작 사운드 추가.
         // 게임 시간을 다시 정상화합니다.
         Time.timeScale = 1f;
 
