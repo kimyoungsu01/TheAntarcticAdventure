@@ -8,7 +8,7 @@ public class Speed_Item : Item
     public float MaxSpeed = 2f;
     public float MinSpeed = 8f;
     public float CharSpeed = 5f;
-    public AudioSource SpeedSound;
+
 
     GameManager gameManager;
 
@@ -24,6 +24,6 @@ public class Speed_Item : Item
     {
         
         gameManager.ChangeSpeed(SpeedAmt);
-        SpeedSound.Play();
+
     }
 }

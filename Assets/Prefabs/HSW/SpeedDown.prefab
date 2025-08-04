@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced29b11d23619a4bb1fb74619993506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InteractClip: {fileID: 8300000, guid: 9f0e08cad9151e04ea494541eae843fe, type: 3}
   MaxSpeed: 0
   MinSpeed: 0
   CharSpeed: 5

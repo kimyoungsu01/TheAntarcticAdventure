@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bbf4d07fdfcd1441924eb7e706d8435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InteractClip: {fileID: 8300000, guid: 0c513bf2521a03e4b9ec8f861d6a1555, type: 3}
   ScoreAmt: 10
 --- !u!1 &8113812998915279491
 GameObject:
