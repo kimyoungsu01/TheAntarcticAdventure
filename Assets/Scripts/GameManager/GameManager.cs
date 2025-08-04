@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,12 +18,12 @@ public class GameManager : MonoBehaviour
     //싱글톤으로 만든 후에 플레이어에 접근하게 만들기,
     public Player player;
 
-    public int HP => player.currentHealth;
-    public int Score => CurrentScore;
+    public float HP => player.currentHealth;
+    public float Score => CurrentScore;
 
 
-    private int CurrentScore =0;
-    private int NowHealth = 0;
+    private float CurrentScore =0;
+    private float NowHealth = 0;
     public TMP_Text ScoreText;
 
 
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     public GameOverUI gameOverUIInstance; // 게임 오버 UI 스크립트 참조
 
-    public int GetCurrentScore()// CurrentScore 변수의 값을 외부에서 읽을 수 있도록 public 메서드를 추가합니다.
+    public float GetCurrentScore()// CurrentScore 변수의 값을 외부에서 읽을 수 있도록 public 메서드를 추가합니다.
     {
         return CurrentScore;
     }
@@ -48,8 +49,8 @@ public class GameManager : MonoBehaviour
 
     public void Heal()
     {
-        NowHealth = player.currentHealth;
-        NowHealth += 20;
+        float NowHealth = player.currentHealth;
+        NowHealth += 20f;
         if (NowHealth > player.maxHealth)
         {
             player.currentHealth = player.maxHealth;

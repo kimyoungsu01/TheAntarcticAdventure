@@ -36,14 +36,14 @@ public class GameOverUI : MonoBehaviour
             restartsText.gameObject.SetActive(true);
         }
     }
-    public void UpdateScore(int score)
+    public void UpdateScore(float score)
     {
         if (gameoverscoreText != null) // null 체크 후 점수 업데이트
         {
             gameoverscoreText.text = score.ToString();
         }
     }
-    public void ShowGameOverScreen(int finalScore)
+    public void ShowGameOverScreen(float finalScore)
     {
         
         this.gameObject.SetActive(true);// 이 스크립트가 붙어있는 게임 오브젝트(UI 패널) 자체를 활성화합니다.
