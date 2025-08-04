@@ -74,15 +74,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 1281381413, guid: 5aa104f2ac76ab345b6eacc011174511, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.1, y: 0.1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &4760844595875648390
@@ -139,7 +139,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 198813025926523648}
-  - {fileID: 6313465969980412043}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &-7045494435341176371
@@ -226,74 +225,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bbf4d07fdfcd1441924eb7e706d8435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InteractClip: {fileID: 0}
   ScoreAmt: 1
---- !u!1001 &9076106926762546963
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1877800870504270173}
-    m_Modifications:
-    - target: {fileID: 1580449185007128241, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_Name
-      value: GoldCoinS
-      objectReference: {fileID: 0}
-    - target: {fileID: 1580449185007128241, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 1880754310786900711, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.071
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
---- !u!4 &6313465969980412043 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3056010040987600792, guid: a5d3ebfb65b81f94da69680e50220e95, type: 3}
-  m_PrefabInstance: {fileID: 9076106926762546963}
-  m_PrefabAsset: {fileID: 0}

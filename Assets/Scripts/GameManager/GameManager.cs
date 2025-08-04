@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public AudioSource Bgm;
     public AudioSource SE;
     public AudioSource GameOverSound;
+    [SerializeField] private AudioClip RestartSound;
+
 
     private float CurrentScore =0;
     private float NowHealth = 0;
@@ -98,18 +100,19 @@ public class GameManager : MonoBehaviour
         if (gameOverUIInstance != null)
         {
             gameOverUIInstance.HideGameOverScreen();
+
         }
-        //이 위치에 재시작 사운드 추가.
-        // 게임 시간을 다시 정상화합니다.
         Time.timeScale = 1f;
+    
+    // 게임 시간을 다시 정상화합니다.
+    // 점수 초기화 (새로운 게임 시작 시 점수를 0으로 만들고 싶을 때)
+    CurrentScore = 0;
 
-        // 점수 초기화 (새로운 게임 시작 시 점수를 0으로 만들고 싶을 때)
-        CurrentScore = 0;
+    // 현재 씬을 다시 로드하여 게임을 재시작합니다.
+    UnityEngine.SceneManagement.SceneManager.LoadScene(
+        UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+}
 
-        // 현재 씬을 다시 로드하여 게임을 재시작합니다.
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-    }
 
 }
 
