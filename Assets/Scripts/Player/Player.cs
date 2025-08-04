@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     private bool isSliding= false; // 슬라이드 상태 여부
     private Vector2 originalColliderSize;
     private Vector2 originalColliderOffset;
-    public Image hpBarImage;
+    public RectTransform hpBarrectTransform;
     Animator animator;
     //-황상욱
     GameManager gameManager;
@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
             Debug.LogError("Animator 컴포넌트를 찾을 수 없습니다! (GetComponentInChildren 확인)");
         if (spriteRenderer == null)
             Debug.LogWarning("SpriteRenderer 컴포넌트를 찾을 수 없습니다. 무적 시 깜빡임 효과를 적용할 수 없습니다.");
-        if (hpBarImage == null)
+        if (hpBarrectTransform == null)
         {
             Debug.LogWarning("Player 스크립트: hpBarImage가 연결되지 않았습니다. HP바를 수동으로 조절할 수 없습니다. Unity Inspector에서 연결해주세요.");
         }
@@ -128,15 +128,7 @@ public class Player : MonoBehaviour
             
 
             // 1. HP 바 수동 조정
-            if (hpBarImage != null)
-            {
-                hpBarImage.fillAmount = 0f;
-                Debug.Log("HP 바를 0으로 설정했습니다.");
-            }
-            else
-            {
-                Debug.LogWarning("Player 스크립트: hpBarImage가 연결되지 않아 HP 바를 수동으로 조절할 수 없습니다.");
-            }
+            
 
             // 2. 무적 상태 정리
             if (isInvincible) // 현재 플레이어가 무적 상태였다면
@@ -164,7 +156,18 @@ public class Player : MonoBehaviour
             {
                 Debug.LogError("GameManager 인스턴스를 찾을 수 없습니다. 게임 오버 UI가 표시되지 않을 수 있습니다.");
             }
+
             Time.timeScale = 0; // 게임 시간을 멈춤
+
+            if (hpBarrectTransform != null)
+            {
+                hpBarrectTransform.sizeDelta = new Vector2(0, hpBarrectTransform.sizeDelta.y);
+                Debug.Log("HP 바를 0으로 설정했습니다.");
+            }
+            else
+            {
+                Debug.LogWarning("Player 스크립트: hpBarImage가 연결되지 않아 HP 바를 수동으로 조절할 수 없습니다.");
+            }
         }
     }
     

@@ -33,7 +33,12 @@ public class UIInterface : MonoBehaviour
     }
     private void Update()
     {
-        UpdateHpBarSmoothly(); // 프레임마다 체력바 업데이트
+        if(Time.timeScale > 0f) // 게임이 일시정지 상태일 때는 업데이트 하지 않음
+        {
+            UpdateHpBarSmoothly();
+        }    
+        // 프레임마다 체력바 업데이트
+        
     }
 
     private void UpdateHpBarSmoothly() //체력바 부드럽게 해준다
