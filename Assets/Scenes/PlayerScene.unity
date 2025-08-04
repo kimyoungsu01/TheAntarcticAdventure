@@ -2981,6 +2981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerJumpSound: {fileID: 8300000, guid: 0581b9e5807cc874ea462a89ffbaa33f, type: 3}
   PlayerHitSound: {fileID: 8300000, guid: 574e0622695853f4ba0e980094de1c61, type: 3}
+  PlayerSlideSound: {fileID: 8300000, guid: 25fa8fd8c777ebd468ed3377c7faad80, type: 3}
   wallPushBackForce: 2
   forwardSpeed: 5
   jumpForce: 14
